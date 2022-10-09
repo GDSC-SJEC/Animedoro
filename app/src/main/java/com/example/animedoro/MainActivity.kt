@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    AnimeradoMainScreen()
                 }
             }
         }
@@ -30,14 +30,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun AnimeradoMainScreen() {
+    WelcomeScreen()
 }
+
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun AnimeradoPreview() {
     AnimedoroTheme {
-        Greeting("Android")
+        AnimeradoMainScreen()
     }
 }
