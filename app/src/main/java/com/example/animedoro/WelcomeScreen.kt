@@ -16,6 +16,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 //import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.rounded.AddTask
@@ -31,6 +32,7 @@ import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.animedoro.data.Datasource
@@ -45,10 +47,11 @@ enum class WelcomeMainScreen() {
 fun WelcomeScreen(){
 //    val navController = rememberNavController()
     Column {
-        WelcomeTextWithImage()
-        AddNewSessionButton()
-        RecentSessions()
-        AllPreviousSessionsButton()
+//        WelcomeTextWithImage()
+//        AddNewSessionButton()
+//        RecentSessions()
+//        AllPreviousSessionsButton()
+        SessionType()
     }
 }
 
@@ -265,3 +268,67 @@ fun AllPreviousSessionsButton() {
 
     }
 }
+
+
+
+
+
+@Composable
+fun SessionType() {
+    SessionTypeAppBar()
+    Buttons()
+}
+
+@Composable
+fun SessionTypeAppBar() {
+    Row(modifier = Modifier.padding(10.dp, top = 20.dp)){
+        OutlinedButton(onClick = { /*TODO*/ },
+        modifier = Modifier.size(50.dp),
+        shape = CircleShape,
+        border = BorderStroke(1.dp, Color.Black),
+            contentPadding = PaddingValues(0.dp),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
+
+        ) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "back button")
+        }
+        Column (modifier = Modifier.padding(start = 50.dp)) {
+            Text(text = "Session Type",
+            style = MaterialTheme.typography.h4)
+        }
+    }
+}
+
+@Composable
+fun Buttons() {
+    Column (horizontalAlignment = Alignment.CenterHorizontally) {
+        Button(onClick = { /*TODO*/ },
+        modifier = Modifier
+            .padding(start = 93.dp, top = 60.dp, end = 0.dp, bottom = 60.dp)
+            .width(234.dp)
+            .height(232.dp),
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Default", textAlign = TextAlign.Center,
+                fontSize = 40.sp, fontWeight = FontWeight.Bold
+                )
+                Text(text = "(40 mins)", textAlign = TextAlign.Center,
+                fontSize = 26.sp, modifier = Modifier
+                        .padding())
+            }
+        }
+        Button(onClick = { /*TODO*/ },
+            modifier = Modifier
+                .padding(start = 93.dp, top = 0.dp, end = 0.dp, bottom = 0.dp)
+                .width(234.dp)
+                .height(232.dp),
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Text(text = "Custom", textAlign = TextAlign.Center,
+                fontSize = 40.sp, fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+
