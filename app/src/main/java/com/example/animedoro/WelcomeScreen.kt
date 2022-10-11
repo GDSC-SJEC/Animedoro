@@ -4,6 +4,7 @@ import android.graphics.drawable.Icon
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -180,19 +181,40 @@ fun SessionsCard(session: Session,
 //                                    .padding(start = 190.dp, top = 0.dp, bottom = 0.dp, end = 0.dp),
 //
 //                            )
-                            OutlinedButton(onClick = { /*TODO*/ },
-                            modifier = Modifier
-                                .size(30.dp)
-                                .padding(start = 0.dp),
-                                shape = CircleShape,
-                                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Blue),
-                                border = BorderStroke(1.dp, Color.Black),
-                                contentPadding = PaddingValues(start = 100.dp)
+//                            Row (horizontalArrangement = Arrangement.End){
+//                                Button(
+//                                    onClick = { /*TODO*/ },
+//                                    modifier = Modifier
+//                                        .size(30.dp)
+//                                        .padding(start = 0.dp),
+//                                    shape = CircleShape,
+//                                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Blue),
+//                                    border = BorderStroke(1.dp, Color.Black),
+//                                    contentPadding = PaddingValues(start = 100.dp)
+//                                ) {
+//                                    Icon(
+//                                        imageVector = Icons.Rounded.ArrowForward,
+//                                        contentDescription = "Arrow Forward",
+//                                        modifier = Modifier
+//                                            .padding(
+//                                                start = 0.dp,
+//                                                top = 0.dp,
+//                                                bottom = 0.dp,
+//                                                end = 0.dp
+//                                            )
+//                                    )
+//                                }
+//                            }
+                            IconButton(onClick = { /*TODO*/ },
+//                            modifier = Modifier.border(BorderStroke(1.dp, Color.Black)),
+
                             ) {
-                                Icon(imageVector = Icons.Filled.ArrowForward,
-                                contentDescription = "Arrow Forward",
+                                androidx.compose.material.Icon(
+                                    imageVector = Icons.Rounded.ArrowForward,
+                                    contentDescription = "Arrow forward",
                                     modifier = Modifier
-                                    .padding(start = 0.dp, top = 0.dp, bottom = 0.dp, end = 0.dp))
+                                    .padding(start = 190.dp, top = 0.dp, bottom = 0.dp, end = 0.dp)
+                                )
                             }
                         }
                     }
