@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -51,7 +52,8 @@ fun WelcomeScreen(){
 //        AddNewSessionButton()
 //        RecentSessions()
 //        AllPreviousSessionsButton()
-        SessionType()
+//        SessionType()
+        AllSessions()
     }
 }
 
@@ -172,17 +174,17 @@ fun SessionsCard(session: Session,
                                     modifier = Modifier.padding(end = 10.dp)
                                 )
                                 Text(text = stringResource(id = session.stringResourceId))
-                            }
-                            Row (modifier = Modifier
-                                .padding(start = 10.dp, top = 10.dp, bottom = 0.dp, end = 0.dp)){
-                                androidx.compose.material.Icon(
-                                    imageVector = Icons.Rounded.AddTask ,
-                                    contentDescription = "add task icon",
-                                    modifier = Modifier.padding(end = 10.dp)
-                                )
+                        }
+                        Row (modifier = Modifier
+                            .padding(start = 10.dp, top = 10.dp, bottom = 0.dp, end = 0.dp)){
+                            androidx.compose.material.Icon(
+                                imageVector = Icons.Rounded.AddTask ,
+                                contentDescription = "add task icon",
+                                modifier = Modifier.padding(end = 10.dp)
+                            )
 
-                                Text(text = stringResource(id = session.taskResourceId))
-                            }
+                            Text(text = stringResource(id = session.taskResourceId))
+                        }
 //                            Icon(
 //                                imageVector = Icons.Filled.ArrowForward,
 //                                contentDescription = "Arrow Forward",
@@ -332,3 +334,89 @@ fun Buttons() {
 }
 
 
+
+
+
+@Composable
+fun AllSessions() {
+    AllSessionsAppBar()
+    AllSessionList(sessionList = Datasource().loadSessions())
+}
+
+@Composable
+fun AllSessionsAppBar() {
+    Row(modifier = Modifier.padding(10.dp, top = 20.dp)){
+        OutlinedButton(onClick = { /*TODO*/ },
+            modifier = Modifier.size(50.dp),
+            shape = CircleShape,
+            border = BorderStroke(1.dp, Color.Black),
+            contentPadding = PaddingValues(0.dp),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
+
+        ) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "back button")
+        }
+        Column (modifier = Modifier.padding(start = 50.dp)) {
+            Text(text = "All Sessions",
+//                style = MaterialTheme.typography.h4,
+            fontWeight = FontWeight.Bold,
+            fontSize = 32.sp)
+        }
+    }
+}
+
+@Composable
+fun AllSessionsCard(session: Session,
+                    modifier: Modifier = Modifier) {
+    Card(modifier = Modifier
+        .padding(start = 25.dp, top = 20.dp, end = 10.dp, bottom = 20.dp)
+        .height(97.dp)
+        .width(322.dp), elevation = 10.dp,
+        shape = RoundedCornerShape(20.dp)
+    ) {
+        Row {
+            Image(
+                painter =
+                painterResource(id = session.imageResourceId),
+                contentDescription = stringResource(id = session.stringResourceId),
+                modifier = Modifier
+                    .width(129.dp)
+                    .height(97.dp)
+                    .clip(RoundedCornerShape(20.dp)),
+
+                contentScale = ContentScale.Crop
+            )
+            Column() {
+                Row (modifier = Modifier
+                    .padding(start = 10.dp, top = 10.dp, bottom = 0.dp, end = 0.dp)) {
+                    androidx.compose.material.Icon(
+                        imageVector = Icons.Filled.Schedule,
+                        contentDescription = "schedule",
+                        modifier = Modifier.padding(end = 10.dp)
+                    )
+                    Text(text = stringResource(id = session.stringResourceId))
+                }
+                Row (modifier = Modifier
+                    .padding(start = 10.dp, top = 10.dp, bottom = 0.dp, end = 0.dp)){
+                    androidx.compose.material.Icon(
+                        imageVector = Icons.Rounded.AddTask ,
+                        contentDescription = "add task icon",
+                        modifier = Modifier.padding(end = 10.dp)
+                    )
+
+                    Text(text = stringResource(id = session.taskResourceId))
+                }
+            }
+        }
+    }
+
+}
+
+@Composable
+fun AllSessionList(sessionList: List<Session>, modifier: Modifier = Modifier) {
+    LazyColumn (modifier = Modifier.padding(top = 10.dp, start = 20.dp, bottom = 10.dp, end = 0.dp)){
+        items(sessionList) {
+                session ->  AllSessionsCard(session = session)
+        }
+    }
+}
