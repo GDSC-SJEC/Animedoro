@@ -36,8 +36,14 @@ import androidx.compose.ui.unit.sp
 import com.example.animedoro.data.Datasource
 import com.example.animedoro.model.Session
 
+enum class WelcomeMainScreen() {
+    SessionType,
+    AllSessions
+}
+
 @Composable
 fun WelcomeScreen(){
+//    val navController = rememberNavController()
     Column {
         WelcomeTextWithImage()
         AddNewSessionButton()
