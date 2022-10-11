@@ -110,7 +110,7 @@ fun AddNewSessionButton(modifier: Modifier = Modifier) {
 @Composable
 fun RecentSessions(modifier: Modifier = Modifier) {
     Row(modifier = Modifier
-        .padding(start = 20.dp,top = 20.dp, bottom = 10.dp,end = 0.dp )) {
+        .padding(start = 10.dp,top = 20.dp, bottom = 10.dp,end = 0.dp )) {
         Text(text = "Recent Sessions", fontSize = 32.sp,
             modifier = Modifier
                 .padding(start = 27.dp)
