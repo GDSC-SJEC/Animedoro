@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Animedoro</string>
     <string name="session1">3hrs 50mins</string>
+    <string name="task1">3/4</string>
     <string name="session2">40 mins</string>
+    <string name="task2">9/9</string>
     <string name="session3">2 hrs</string>
+    <string name="task3">5/6</string>
 </resources>
