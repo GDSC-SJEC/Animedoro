@@ -16,6 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.example.animedoro.ui.theme.AnimedoroTheme
 import com.example.animedoro.ui.theme.primary
 
@@ -38,7 +39,8 @@ class MainActivity : ComponentActivity() {
 
 enum class AnimedoroScreen() {
     Welcome,
-    SessionType
+    SessionType,
+    AllPreviousSessions
 }
 
 @Composable
@@ -55,11 +57,25 @@ fun AnimeradoMainScreen(modifier: Modifier = Modifier) {
                 WelcomeScreen(
                     onAddNewSession = {
                         navController.navigate(AnimedoroScreen.SessionType.name)
+                    },
+                    allPreviousSessions  = {
+                        navController.navigate(AnimedoroScreen.AllPreviousSessions.name)
                     }
                 )
             }
             composable(route = AnimedoroScreen.SessionType.name) {
-                SessionType()
+                SessionType(
+                    backButton = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable(route = AnimedoroScreen.AllPreviousSessions.name) {
+                AllSessions(
+                    backButton = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
 

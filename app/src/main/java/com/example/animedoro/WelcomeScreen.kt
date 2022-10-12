@@ -48,16 +48,18 @@ enum class WelcomeMainScreen() {
 
 @Composable
 fun WelcomeScreen(
-    onAddNewSession: () -> Unit
+    onAddNewSession: () -> Unit,
+    allPreviousSessions: () -> Unit
 ){
-//    val navController = rememberNavController()
     Column {
         WelcomeTextWithImage()
         AddNewSessionButton(
             onAddNewSession = onAddNewSession
         )
         RecentSessions()
-        AllPreviousSessionsButton()
+        AllPreviousSessionsButton(
+            allPreviousSessions = allPreviousSessions
+        )
 //        SessionType()
 //        AllSessions()
     }
@@ -264,8 +266,10 @@ fun SessionList(sessionList: List<Session>, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun AllPreviousSessionsButton() {
-    Button(onClick = { /*TODO*/ },
+fun AllPreviousSessionsButton(
+    allPreviousSessions: () -> Unit
+) {
+    Button(onClick = allPreviousSessions,
         modifier = Modifier
             .padding(top = 20.dp, start = 50.dp)
             .height(66.dp)
@@ -296,15 +300,21 @@ fun AllPreviousSessionsButton() {
 
 
 @Composable
-fun SessionType() {
-    SessionTypeAppBar()
+fun SessionType(
+    backButton: () -> Unit
+) {
+    SessionTypeAppBar(
+        backButton = backButton
+    )
     Buttons()
 }
 
 @Composable
-fun SessionTypeAppBar() {
+fun SessionTypeAppBar(
+    backButton: () -> Unit
+) {
     Row(modifier = Modifier.padding(10.dp, top = 20.dp)){
-        OutlinedButton(onClick = { /*TODO*/ },
+        OutlinedButton(onClick = backButton,
         modifier = Modifier.size(50.dp),
         shape = CircleShape,
         border = BorderStroke(1.dp, Color.Black),
@@ -361,15 +371,21 @@ fun Buttons() {
 
 
 @Composable
-fun AllSessions() {
-    AllSessionsAppBar()
+fun AllSessions(
+    backButton: () -> Unit
+) {
+    AllSessionsAppBar(
+        backButton = backButton
+    )
     AllSessionList(sessionList = Datasource().loadSessions())
 }
 
 @Composable
-fun AllSessionsAppBar() {
+fun AllSessionsAppBar(
+    backButton: () -> Unit
+) {
     Row(modifier = Modifier.padding(10.dp, top = 20.dp)){
-        OutlinedButton(onClick = { /*TODO*/ },
+        OutlinedButton(onClick = backButton,
             modifier = Modifier.size(50.dp),
             shape = CircleShape,
             border = BorderStroke(1.dp, Color.Black),
