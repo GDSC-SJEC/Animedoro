@@ -47,15 +47,19 @@ enum class WelcomeMainScreen() {
 }
 
 @Composable
-fun WelcomeScreen(){
+fun WelcomeScreen(
+    onAddNewSession: () -> Unit
+){
 //    val navController = rememberNavController()
     Column {
         WelcomeTextWithImage()
-        AddNewSessionButton()
-        RecentSessions()
+        AddNewSessionButton(
+            onAddNewSession = onAddNewSession
+        )
+//        RecentSessions()
         AllPreviousSessionsButton()
 //        SessionType()
-//        AllSessions()
+        AllSessions()
     }
 }
 
@@ -96,11 +100,13 @@ fun WelcomeTextWithImage(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun AddNewSessionButton(modifier: Modifier = Modifier) {
+fun AddNewSessionButton(
+    onAddNewSession: () -> Unit,
+    modifier: Modifier = Modifier) {
     Row (verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.Center){
         Button(
-            onClick = { /*TODO*/ },
+            onClick = onAddNewSession,
             modifier = Modifier
                 .padding(top = 20.dp, start = 50.dp)
                 .height(103.dp)
@@ -123,11 +129,12 @@ fun AddNewSessionButton(modifier: Modifier = Modifier) {
     }
 }
 
+/*
 @Composable
 fun RecentSessions(modifier: Modifier = Modifier) {
     Row(modifier = Modifier
         .padding(start = 10.dp,top = 20.dp, bottom = 10.dp,end = 0.dp )) {
-        Text(text = "Recent Sessions", fontSize = 32.sp,color = White,  
+        Text(text = "Recent Sessions", fontSize = 32.sp,color = White,
             modifier = Modifier
                 .padding(start = 27.dp)
                 .width(266.dp)
@@ -137,6 +144,7 @@ fun RecentSessions(modifier: Modifier = Modifier) {
     }
     SessionList(sessionList = Datasource().loadSessions())
 }
+*/
 
 @Composable
 fun SessionsCard(session: Session,
