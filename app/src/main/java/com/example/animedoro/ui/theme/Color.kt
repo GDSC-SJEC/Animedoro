@@ -20,3 +20,7 @@ val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
+
+val primary = Color(0xFF484556)
+val secondary = Color(0xFF2F2A42)
+val cardTrans = Color(0xDF160C0C)
