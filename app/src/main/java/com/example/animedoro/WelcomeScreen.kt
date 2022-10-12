@@ -1,6 +1,7 @@
 package com.example.animedoro
 
 import android.graphics.drawable.Icon
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -302,12 +303,15 @@ fun AllPreviousSessionsButton(
 
 @Composable
 fun SessionType(
-    backButton: () -> Unit
+    backButton: () -> Unit,
+    onDefault: () -> Unit
 ) {
     SessionTypeAppBar(
         backButton = backButton
     )
-    Buttons()
+    Buttons(
+        onDefault = onDefault
+    )
 }
 
 @Composable
@@ -333,9 +337,11 @@ fun SessionTypeAppBar(
 }
 
 @Composable
-fun Buttons() {
+fun Buttons(
+    onDefault: () -> Unit
+) {
     Column (horizontalAlignment = Alignment.CenterHorizontally) {
-        Button(onClick = { /*TODO*/ },
+        Button(onClick = onDefault,
         modifier = Modifier
             .padding(start = 93.dp, top = 140.dp, end = 0.dp, bottom = 60.dp)
             .width(234.dp)

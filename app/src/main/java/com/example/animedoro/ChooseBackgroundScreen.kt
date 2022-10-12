@@ -34,28 +34,26 @@ import com.example.animedoro.data.Datasource
 import com.example.animedoro.model.Session
 
 @Composable
-fun ChooseBackGroundScreen(){
+fun ChooseBackGroundScreen(
+    backButton: () -> Unit
+){
     Column {
 
-        val list = listOf(Header(), UploadBackGroundButton() , )
+        val list = listOf(Header(backButton = backButton), UploadBackGroundButton() , )
         LazyColumn(modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(16.dp))
         {
             items(list)
             {
-                Header()
+                Header(
+                    backButton = backButton
+                )
                 UploadBackGroundButton()
                 or()
                 InAppBackgrounds()
                 NextScreen()
             }
         }
-
-        /*
-
-        */
-
-
     }
 
 }
@@ -63,10 +61,12 @@ fun ChooseBackGroundScreen(){
 
 
 @Composable
-fun Header()
+fun Header(
+    backButton: () -> Unit
+)
 {
     Row(modifier = Modifier.padding(10.dp , top = 20.dp)) {
-        OutlinedButton(onClick = { /*TODO*/ },
+        OutlinedButton(onClick = backButton,
             modifier= Modifier.size(50.dp),  //avoid the oval shape
             shape = CircleShape,
             border= BorderStroke(1.dp, Color.Black),

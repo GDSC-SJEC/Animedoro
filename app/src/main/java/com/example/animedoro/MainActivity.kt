@@ -41,7 +41,8 @@ class MainActivity : ComponentActivity() {
 enum class AnimedoroScreen() {
     Welcome,
     SessionType,
-    AllPreviousSessions
+    AllPreviousSessions,
+    ChooseBackground
 }
 
 @Composable
@@ -68,11 +69,21 @@ fun AnimeradoMainScreen(modifier: Modifier = Modifier) {
                 SessionType(
                     backButton = {
                         navController.popBackStack()
+                    },
+                    onDefault = {
+                        navController.navigate(AnimedoroScreen.ChooseBackground.name)
                     }
                 )
             }
             composable(route = AnimedoroScreen.AllPreviousSessions.name) {
                 AllSessions(
+                    backButton = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable(route = AnimedoroScreen.ChooseBackground.name) {
+                ChooseBackGroundScreen(
                     backButton = {
                         navController.popBackStack()
                     }
