@@ -56,10 +56,10 @@ fun WelcomeScreen(
         AddNewSessionButton(
             onAddNewSession = onAddNewSession
         )
-//        RecentSessions()
+        RecentSessions()
         AllPreviousSessionsButton()
 //        SessionType()
-        AllSessions()
+//        AllSessions()
     }
 }
 
@@ -129,12 +129,12 @@ fun AddNewSessionButton(
     }
 }
 
-/*
+
 @Composable
 fun RecentSessions(modifier: Modifier = Modifier) {
     Row(modifier = Modifier
         .padding(start = 10.dp,top = 20.dp, bottom = 10.dp,end = 0.dp )) {
-        Text(text = "Recent Sessions", fontSize = 32.sp,color = White,
+        Text(text = "Recent Sessions", fontSize = 32.sp,
             modifier = Modifier
                 .padding(start = 27.dp)
                 .width(266.dp)
@@ -144,7 +144,7 @@ fun RecentSessions(modifier: Modifier = Modifier) {
     }
     SessionList(sessionList = Datasource().loadSessions())
 }
-*/
+
 
 @Composable
 fun SessionsCard(session: Session,
