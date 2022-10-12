@@ -55,6 +55,7 @@ fun WelcomeScreen(
         WelcomeTextWithImage()
         AddNewSessionButton(
             onAddNewSession = onAddNewSession
+
         )
         RecentSessions()
         AllPreviousSessionsButton(
@@ -336,7 +337,7 @@ fun Buttons() {
     Column (horizontalAlignment = Alignment.CenterHorizontally) {
         Button(onClick = { /*TODO*/ },
         modifier = Modifier
-            .padding(start = 93.dp, top = 60.dp, end = 0.dp, bottom = 60.dp)
+            .padding(start = 93.dp, top = 140.dp, end = 0.dp, bottom = 60.dp)
             .width(234.dp)
             .height(232.dp),
             shape = RoundedCornerShape(20.dp)
