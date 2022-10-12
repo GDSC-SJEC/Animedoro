@@ -38,6 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.animedoro.data.Datasource
 import com.example.animedoro.model.Session
+import com.example.animedoro.ui.theme.White
+import com.example.animedoro.ui.theme.cardTrans
 
 enum class WelcomeMainScreen() {
     SessionType,
@@ -66,12 +68,14 @@ fun WelcomeTextWithImage(modifier: Modifier = Modifier) {
                 fontSize = 40.sp,
                 modifier = Modifier.padding(top = 17.dp, start = 23.dp),
                 fontWeight = FontWeight.Bold,
+                color=White
 
             )
             Text(
                 text = "User",
                 fontSize = 36.sp,
                 modifier = Modifier.padding(start = 26.dp),
+                color = White
             )
         }
         Column(modifier = Modifier.padding(top = 30.dp, start = 60.dp), horizontalAlignment = Alignment.End) {
@@ -104,12 +108,13 @@ fun AddNewSessionButton(modifier: Modifier = Modifier) {
                 .clip(RoundedCornerShape(40.dp)),
         )
          {
-             Icon(imageVector = Icons.Filled.Add, contentDescription = "Plus Icon", modifier = Modifier.size(40.dp),
+             Icon(imageVector = Icons.Filled.Add, contentDescription = "Plus Icon", modifier = Modifier.size(40.dp),tint=White
                  )
             Text(
                 text = " Add New Session",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
+                color = White,
                 modifier = Modifier
                     .height(32.63.dp)
                     .width(208.9.dp)
@@ -122,12 +127,13 @@ fun AddNewSessionButton(modifier: Modifier = Modifier) {
 fun RecentSessions(modifier: Modifier = Modifier) {
     Row(modifier = Modifier
         .padding(start = 10.dp,top = 20.dp, bottom = 10.dp,end = 0.dp )) {
-        Text(text = "Recent Sessions", fontSize = 32.sp,
+        Text(text = "Recent Sessions", fontSize = 32.sp,color = White,  
             modifier = Modifier
                 .padding(start = 27.dp)
                 .width(266.dp)
                 .height(48.dp),
-            fontWeight = FontWeight.Bold,)
+            fontWeight = FontWeight.Bold,
+            color = White)
     }
     SessionList(sessionList = Datasource().loadSessions())
 }
@@ -163,6 +169,7 @@ fun SessionsCard(session: Session,
                         .fillMaxHeight()
                         .fillMaxWidth()
                         .padding(top = 170.dp, start = 0.dp, end = 0.dp, bottom = 0.dp),
+                          backgroundColor=cardTrans,
                         shape = RoundedCornerShape(20.dp)
                     ){
                         Column {
@@ -171,19 +178,21 @@ fun SessionsCard(session: Session,
                                 androidx.compose.material.Icon(
                                     imageVector = Icons.Filled.Schedule,
                                     contentDescription = "schedule",
-                                    modifier = Modifier.padding(end = 10.dp)
+                                    modifier = Modifier.padding(end = 10.dp),
+                                    tint=White
                                 )
-                                Text(text = stringResource(id = session.stringResourceId))
+                                Text(text = stringResource(id = session.stringResourceId),color = White)
                         }
                         Row (modifier = Modifier
                             .padding(start = 10.dp, top = 10.dp, bottom = 0.dp, end = 0.dp)){
                             androidx.compose.material.Icon(
                                 imageVector = Icons.Rounded.AddTask ,
                                 contentDescription = "add task icon",
-                                modifier = Modifier.padding(end = 10.dp)
+                                modifier = Modifier.padding(end = 10.dp),
+                                tint=White
                             )
 
-                            Text(text = stringResource(id = session.taskResourceId))
+                            Text(text = stringResource(id = session.taskResourceId),color = White)
                         }
 //                            Icon(
 //                                imageVector = Icons.Filled.ArrowForward,
@@ -223,6 +232,7 @@ fun SessionsCard(session: Session,
                                 androidx.compose.material.Icon(
                                     imageVector = Icons.Rounded.ArrowForward,
                                     contentDescription = "Arrow forward",
+                                    tint=White,
                                     modifier = Modifier
                                     .padding(start = 190.dp, top = 0.dp, bottom = 0.dp, end = 0.dp)
                                 )
@@ -260,11 +270,13 @@ fun AllPreviousSessionsButton() {
 
         Text(text = "All Previous Sessions ",fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
+             color=White,
             modifier = Modifier
                 .width(250.dp)
                 .height(40.dp)
                 .padding(5.dp))
         Icon(Icons.Filled.ArrowForward, contentDescription = "Arrow Forward",
+             tint=White,
             modifier = Modifier.size(29.17.dp))
 
 
@@ -313,9 +325,11 @@ fun Buttons() {
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "Default", textAlign = TextAlign.Center,
+                     color = White,
                 fontSize = 40.sp, fontWeight = FontWeight.Bold
                 )
                 Text(text = "(40 mins)", textAlign = TextAlign.Center,
+                     color = White,
                 fontSize = 26.sp, modifier = Modifier
                         .padding())
             }
@@ -328,6 +342,7 @@ fun Buttons() {
             shape = RoundedCornerShape(20.dp)
         ) {
             Text(text = "Custom", textAlign = TextAlign.Center,
+                 color = White,
                 fontSize = 40.sp, fontWeight = FontWeight.Bold)
         }
     }
@@ -354,12 +369,13 @@ fun AllSessionsAppBar() {
             colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
 
         ) {
-            Icon(Icons.Default.ArrowBack, contentDescription = "back button")
+            Icon(Icons.Default.ArrowBack, contentDescription = "back button",tint=White)
         }
         Column (modifier = Modifier.padding(start = 50.dp)) {
             Text(text = "All Sessions",
 //                style = MaterialTheme.typography.h4,
             fontWeight = FontWeight.Bold,
+                 color = White,
             fontSize = 32.sp)
         }
     }
@@ -372,6 +388,7 @@ fun AllSessionsCard(session: Session,
         .padding(start = 25.dp, top = 20.dp, end = 10.dp, bottom = 20.dp)
         .height(97.dp)
         .width(322.dp), elevation = 10.dp,
+         backgroundColor = cardTrans,
         shape = RoundedCornerShape(20.dp)
     ) {
         Row {
@@ -392,19 +409,21 @@ fun AllSessionsCard(session: Session,
                     androidx.compose.material.Icon(
                         imageVector = Icons.Filled.Schedule,
                         contentDescription = "schedule",
+                        tint=White,
                         modifier = Modifier.padding(end = 10.dp)
                     )
-                    Text(text = stringResource(id = session.stringResourceId))
+                    Text(text = stringResource(id = session.stringResourceId),color = White)
                 }
                 Row (modifier = Modifier
                     .padding(start = 10.dp, top = 10.dp, bottom = 0.dp, end = 0.dp)){
                     androidx.compose.material.Icon(
                         imageVector = Icons.Rounded.AddTask ,
                         contentDescription = "add task icon",
+                        tint=White,
                         modifier = Modifier.padding(end = 10.dp)
                     )
 
-                    Text(text = stringResource(id = session.taskResourceId))
+                    Text(text = stringResource(id = session.taskResourceId),color = White)
                 }
             }
         }
