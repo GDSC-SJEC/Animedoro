@@ -48,12 +48,12 @@ enum class WelcomeMainScreen() {
 fun WelcomeScreen(){
 //    val navController = rememberNavController()
     Column {
-//        WelcomeTextWithImage()
-//        AddNewSessionButton()
-//        RecentSessions()
-//        AllPreviousSessionsButton()
+        WelcomeTextWithImage()
+        AddNewSessionButton()
+        RecentSessions()
+        AllPreviousSessionsButton()
 //        SessionType()
-        AllSessions()
+//        AllSessions()
     }
 }
 
