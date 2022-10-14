@@ -6,4 +6,10 @@
     <string name="task2">9/9</string>
     <string name="session3">2 hrs</string>
     <string name="task3">5/6</string>
+
+    <string name="addedTask1">1. Building Internship Project</string>
+    <string name="addedTask2">2. Getting The logs rolling</string>
+    <string name="addedTask3">3. Finishing up the report</string>
+    <string name="addedTask4">4. Making the ppt</string>
+    <string name="addedTask5">5. Demonstration Rehearsal</string>
 </resources>

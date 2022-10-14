@@ -24,7 +24,7 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.rounded.AddTask
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Schedule
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,11 +34,13 @@ import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.animedoro.data.Datasource
 import com.example.animedoro.model.Session
+import com.example.animedoro.model.TasksAdded
 import com.example.animedoro.ui.theme.White
 import com.example.animedoro.ui.theme.cardTrans
 
@@ -53,17 +55,19 @@ fun WelcomeScreen(
     allPreviousSessions: () -> Unit
 ){
     Column {
-        WelcomeTextWithImage()
-        AddNewSessionButton(
-            onAddNewSession = onAddNewSession
-
-        )
-        RecentSessions()
-        AllPreviousSessionsButton(
-            allPreviousSessions = allPreviousSessions
-        )
+//        WelcomeTextWithImage()
+//        AddNewSessionButton(
+//            onAddNewSession = onAddNewSession
+//
+//        )
+//        RecentSessions()
+//        AllPreviousSessionsButton(
+//            allPreviousSessions = allPreviousSessions
+//        )
 //        SessionType()
 //        AllSessions()
+//    StartYourSessionScreen()
+        AddYourTasksScreen()
     }
 }
 
@@ -464,9 +468,215 @@ fun AllSessionsCard(session: Session,
 
 @Composable
 fun AllSessionList(sessionList: List<Session>, modifier: Modifier = Modifier) {
-    LazyColumn (modifier = Modifier.padding(top = 10.dp, start = 20.dp, bottom = 10.dp, end = 0.dp)){
+    LazyColumn (modifier = Modifier.padding(top = 100.dp, start = 20.dp, bottom = 10.dp, end = 0.dp)){
         items(sessionList) {
                 session ->  AllSessionsCard(session = session)
+        }
+    }
+}
+
+@Composable
+fun StartYourSessionScreen() {
+    StartYourSessionsAppBar()
+    StartYourSessionButton()
+}
+
+@Composable
+fun StartYourSessionsAppBar() {
+    Row(modifier = Modifier.padding(10.dp, top = 20.dp)){
+        OutlinedButton(onClick = {  },
+            modifier = Modifier.size(50.dp),
+            shape = CircleShape,
+            border = BorderStroke(1.dp, Color.Black),
+            contentPadding = PaddingValues(0.dp),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
+
+        ) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "back button")
+        }
+        Column (modifier = Modifier.padding(start = 50.dp)) {
+            Text(text = "Start Your",
+                style = MaterialTheme.typography.h4)
+            Text(text = "Session?",
+                style = MaterialTheme.typography.h4)
+        }
+    }
+}
+
+@Composable
+fun StartYourSessionButton() {
+    Column(horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center) {
+        Button(onClick = {},
+            modifier = Modifier
+                .padding(start = 93.dp, top = 140.dp, end = 0.dp, bottom = 60.dp)
+                .width(234.dp)
+                .height(232.dp),
+            shape = RoundedCornerShape(20.dp),
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Start", textAlign = TextAlign.Center,
+                    color = White,
+                    fontSize = 40.sp, fontWeight = FontWeight.Bold
+                )
+            }
+        }
+    }
+}
+
+
+
+
+
+
+@Composable
+fun AddYourTasksScreen() {
+    AddYourTasksAppBar()
+    AddYourTasksTextFieldWithButton()
+    TasksAddedList(tasksAdded = Datasource().loadTasks())
+//    AddTaskScreenNextButton()
+}
+@Composable
+fun AddYourTasksAppBar() {
+    Row(modifier = Modifier.padding(10.dp, top = 20.dp)){
+        OutlinedButton(onClick = {  },
+            modifier = Modifier.size(50.dp),
+            shape = CircleShape,
+            border = BorderStroke(1.dp, Color.Black),
+            contentPadding = PaddingValues(0.dp),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
+
+        ) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "back button")
+        }
+        Column (modifier = Modifier.padding(start = 50.dp)) {
+            Text(text = "Add Your Tasks",
+                style = MaterialTheme.typography.h4)
+        }
+    }
+}
+@Composable
+fun AddYourTasksTextFieldWithButton() {
+    var text by remember {
+        mutableStateOf(TextFieldValue(""))
+    }
+    Row(horizontalArrangement = Arrangement.Center) {
+        TextField(
+            value = text,
+            onValueChange = { newText ->
+                text = newText
+            },
+            modifier = Modifier
+                .height(236.dp)
+                .width(350.dp)
+                .padding(start = 60.dp, top = 50.dp, end = 0.dp, bottom = 0.dp),
+            shape = RoundedCornerShape(20.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = Color.Gray,
+                disabledTextColor = Color.Transparent,
+//                backgroundColor = Color.White,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            )
+        )
+    }
+    Row(horizontalArrangement = Arrangement.Center) {
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .padding(start = 80.dp, top = 30.dp, end = 0.dp, bottom = 0.dp)
+                .width(120.dp)
+                .height(50.dp),
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Text(
+                text = "Add Task",
+                color = Color.White
+            )
+        }
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .padding(start = 20.dp, top = 30.dp, end = 0.dp, bottom = 0.dp)
+                .width(120.dp)
+                .height(50.dp),
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            Text(
+                text = "Next",
+                color = Color.White
+            )
+            Icon(Icons.Filled.ArrowForward, contentDescription = "Arrow Forward",
+                tint=White,
+                modifier = Modifier.size(29.17.dp))
+        }
+         }
+    Row(modifier = Modifier.padding(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 0.dp)) {
+        Text(
+            text = "Tasks",
+            modifier = Modifier
+                .width(212.dp)
+                .height(48.dp)
+                .padding(start = 63.dp, top = 20.dp, end = 0.dp, bottom = 0.dp),
+//            style = MaterialTheme.typography.h4
+        fontSize = 20.sp,
+
+        )
+    }
+}
+
+@Composable
+fun TasksAddedCard(tasks: TasksAdded,
+                    modifier: Modifier = Modifier) {
+    Card(modifier = Modifier
+        .padding(start = 25.dp, top = 0.dp, end = 10.dp, bottom = 20.dp)
+        .height(60.dp)
+        .width(322.dp),
+        elevation = 10.dp,
+        backgroundColor = cardTrans,
+        shape = RoundedCornerShape(20.dp)
+    ) {
+
+
+                Row (modifier = Modifier
+                    .padding(start = 60.dp, top = 15.dp, bottom = 0.dp, end = 0.dp)) {
+                    Text(text = stringResource(id = tasks.taskResourceId),color = White,
+                    textAlign = TextAlign.Center)
+                }
+
+
+
+    }
+
+}
+
+@Composable
+fun TasksAddedList(tasksAdded: List<TasksAdded>, modifier: Modifier = Modifier) {
+    LazyColumn (modifier = Modifier.padding(top = 100.dp, start = 20.dp, bottom = 0.dp, end = 0.dp)){
+        items(tasksAdded) {
+                tasks ->  TasksAddedCard(tasks = tasks)
+        }
+    }
+}
+
+@Composable
+fun AddTaskScreenNextButton() {
+    Row(horizontalArrangement = Arrangement.Center) {
+        Button(onClick = { /*TODO*/ },
+        modifier = Modifier
+            .width(132.dp)
+            .height(61.dp)) {
+            Text(text = "Next ",fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color=White,
+                modifier = Modifier
+                    .width(48.dp)
+                    .height(30.dp)
+                    .padding(5.dp))
+            Icon(Icons.Filled.ArrowForward, contentDescription = "Arrow Forward",
+                tint=White,
+                modifier = Modifier.size(29.17.dp))
         }
     }
 }
