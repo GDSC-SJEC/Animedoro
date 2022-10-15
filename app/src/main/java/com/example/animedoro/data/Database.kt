@@ -30,6 +30,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                     )")
 
         db.execSQL(query2)
+
+        println("database created")
     }
  
  

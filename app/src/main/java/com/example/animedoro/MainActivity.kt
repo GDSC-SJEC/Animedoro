@@ -20,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.animedoro.ui.theme.AnimedoroTheme
 import com.example.animedoro.ui.theme.primary
+import com.example.animedoro.data.Datasource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,4 +103,7 @@ fun AnimeradoPreview() {
     AnimedoroTheme {
         AnimeradoMainScreen()
     }
+    db = DataBase.DBHelper()
+    db.onCreate()
+    
 }
