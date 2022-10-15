@@ -44,30 +44,21 @@ import com.example.animedoro.model.TasksAdded
 import com.example.animedoro.ui.theme.White
 import com.example.animedoro.ui.theme.cardTrans
 
-enum class WelcomeMainScreen() {
-    SessionType,
-    AllSessions
-}
-
 @Composable
 fun WelcomeScreen(
     onAddNewSession: () -> Unit,
     allPreviousSessions: () -> Unit
 ){
     Column {
-//        WelcomeTextWithImage()
-//        AddNewSessionButton(
-//            onAddNewSession = onAddNewSession
-//
-//        )
-//        RecentSessions()
-//        AllPreviousSessionsButton(
-//            allPreviousSessions = allPreviousSessions
-//        )
-//        SessionType()
-//        AllSessions()
-//    StartYourSessionScreen()
-        AddYourTasksScreen()
+        WelcomeTextWithImage()
+        AddNewSessionButton(
+            onAddNewSession = onAddNewSession
+
+        )
+        RecentSessions()
+        AllPreviousSessionsButton(
+            allPreviousSessions = allPreviousSessions
+        )
     }
 }
 
@@ -476,15 +467,21 @@ fun AllSessionList(sessionList: List<Session>, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun StartYourSessionScreen() {
-    StartYourSessionsAppBar()
+fun StartYourSessionScreen(
+    backButton: () -> Unit
+) {
+    StartYourSessionsAppBar(
+        backButton = backButton
+    )
     StartYourSessionButton()
 }
 
 @Composable
-fun StartYourSessionsAppBar() {
+fun StartYourSessionsAppBar(
+    backButton: () -> Unit
+) {
     Row(modifier = Modifier.padding(10.dp, top = 20.dp)){
-        OutlinedButton(onClick = {  },
+        OutlinedButton(onClick = backButton,
             modifier = Modifier.size(50.dp),
             shape = CircleShape,
             border = BorderStroke(1.dp, Color.Black),
@@ -530,16 +527,27 @@ fun StartYourSessionButton() {
 
 
 @Composable
-fun AddYourTasksScreen() {
-    AddYourTasksAppBar()
-    AddYourTasksTextFieldWithButton()
-    TasksAddedList(tasksAdded = Datasource().loadTasks())
+fun AddYourTasksScreen(
+    backButton: () -> Unit,
+    onNext: () -> Unit
+) {
+    Column {
+        AddYourTasksAppBar(
+            backButton = backButton
+        )
+        AddYourTasksTextFieldWithButton(
+            onNext = onNext
+        )
+        TasksAddedList(tasksAdded = Datasource().loadTasks())
 //    AddTaskScreenNextButton()
+    }
 }
 @Composable
-fun AddYourTasksAppBar() {
+fun AddYourTasksAppBar(
+    backButton: () -> Unit
+) {
     Row(modifier = Modifier.padding(10.dp, top = 20.dp)){
-        OutlinedButton(onClick = {  },
+        OutlinedButton(onClick = backButton,
             modifier = Modifier.size(50.dp),
             shape = CircleShape,
             border = BorderStroke(1.dp, Color.Black),
@@ -556,7 +564,9 @@ fun AddYourTasksAppBar() {
     }
 }
 @Composable
-fun AddYourTasksTextFieldWithButton() {
+fun AddYourTasksTextFieldWithButton(
+    onNext: () -> Unit
+) {
     var text by remember {
         mutableStateOf(TextFieldValue(""))
     }
@@ -596,7 +606,7 @@ fun AddYourTasksTextFieldWithButton() {
             )
         }
         Button(
-            onClick = { /*TODO*/ },
+            onClick = onNext,
             modifier = Modifier
                 .padding(start = 20.dp, top = 30.dp, end = 0.dp, bottom = 0.dp)
                 .width(120.dp)

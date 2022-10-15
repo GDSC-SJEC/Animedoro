@@ -42,7 +42,8 @@ enum class AnimedoroScreen() {
     Welcome,
     SessionType,
     AllPreviousSessions,
-    ChooseBackground
+    AddYourTasks,
+    StartScreen
 }
 
 @Composable
@@ -71,7 +72,7 @@ fun AnimeradoMainScreen(modifier: Modifier = Modifier) {
                         navController.popBackStack()
                     },
                     onDefault = {
-                        navController.navigate(AnimedoroScreen.ChooseBackground.name)
+                        navController.navigate(AnimedoroScreen.AddYourTasks.name)
                     }
                 )
             }
@@ -82,8 +83,18 @@ fun AnimeradoMainScreen(modifier: Modifier = Modifier) {
                     }
                 )
             }
-            composable(route = AnimedoroScreen.ChooseBackground.name) {
-                ChooseBackGroundScreen(
+            composable(route = AnimedoroScreen.AddYourTasks.name) {
+                AddYourTasksScreen(
+                    backButton = {
+                        navController.popBackStack()
+                    },
+                    onNext = {
+                        navController.navigate(AnimedoroScreen.StartScreen.name)
+                    }
+                )
+            }
+            composable(route = AnimedoroScreen.StartScreen.name) {
+                StartYourSessionScreen(
                     backButton = {
                         navController.popBackStack()
                     }
