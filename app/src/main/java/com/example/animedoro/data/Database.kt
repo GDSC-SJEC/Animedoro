@@ -3,11 +3,10 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.DatabaseErrorHandler
 
 
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
-    SQLiteOpenHelper(context, "animedoro.db", factory, 1, DatabaseErrorHandler) {
+    SQLiteOpenHelper(context, "animedoro.db", factory, 1) {
  
 
     override fun onCreate(db: SQLiteDatabase) {
