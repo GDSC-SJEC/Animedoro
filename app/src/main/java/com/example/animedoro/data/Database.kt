@@ -1,3 +1,5 @@
+package com.example.animedoro
+
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -64,6 +66,38 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         // below code returns a cursor to
         // read data from the database
         return db.rawQuery("SELECT * FROM sessions where session_id = " + sid, null)
+
+        db.close()
+    }
+
+    fun addTask(tid : Integer, sid : Integer, desc : String, comp : Integer) {
+ 
+        // below we are creating a content values variable
+        val values = ContentValues()
+ 
+        // we are inserting our values in the form of key-value pair
+        values.put(task_id, tid)
+        values.put(session_id, sid)
+        values.put(description, desc)
+        values.put(completed, comp)
+ 
+        // below line is to get writable database from our database helper class.
+        val db = this.writableDatabase
+ 
+        // all values are inserted into database
+        db.insert(tasks, null, values)
+ 
+        db.close()
+    }
+
+    fun getTaskData(sid : Integer): Cursor? {
+ 
+        // below line is to get readable database from our database helper class.
+        val db = this.readableDatabase
+ 
+        // below code returns a cursor to
+        // read data from the database
+        return db.rawQuery("SELECT * FROM tasks where session_id = " + sid, null)
 
         db.close()
     }

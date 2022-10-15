@@ -103,7 +103,7 @@ fun AnimeradoPreview() {
     AnimedoroTheme {
         AnimeradoMainScreen()
     }
-    db = DBHelper(this, null)
+    db = DBHelper()
     db.onCreate()
     
 }
