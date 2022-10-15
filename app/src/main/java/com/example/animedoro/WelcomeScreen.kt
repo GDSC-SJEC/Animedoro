@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.animedoro.data.Datasource
 import com.example.animedoro.model.Session
+import com.example.animedoro.model.Tasks
 import com.example.animedoro.model.TasksAdded
 import com.example.animedoro.ui.theme.White
 import com.example.animedoro.ui.theme.cardTrans
@@ -55,10 +56,10 @@ fun WelcomeScreen(
             onAddNewSession = onAddNewSession
 
         )
-        RecentSessions()
-        AllPreviousSessionsButton(
-            allPreviousSessions = allPreviousSessions
-        )
+//        RecentSessions()
+//        AllPreviousSessionsButton(
+//            allPreviousSessions = allPreviousSessions
+//        )
     }
 }
 
@@ -354,17 +355,17 @@ fun Buttons(
                         .padding())
             }
         }
-        Button(onClick = { /*TODO*/ },
-            modifier = Modifier
-                .padding(start = 93.dp, top = 0.dp, end = 0.dp, bottom = 0.dp)
-                .width(234.dp)
-                .height(232.dp),
-            shape = RoundedCornerShape(20.dp)
-        ) {
-            Text(text = "Custom", textAlign = TextAlign.Center,
-                 color = White,
-                fontSize = 40.sp, fontWeight = FontWeight.Bold)
-        }
+//        Button(onClick = { /*TODO*/ },
+//            modifier = Modifier
+//                .padding(start = 93.dp, top = 0.dp, end = 0.dp, bottom = 0.dp)
+//                .width(234.dp)
+//                .height(232.dp),
+//            shape = RoundedCornerShape(20.dp)
+//        ) {
+//            Text(text = "Custom", textAlign = TextAlign.Center,
+//                 color = White,
+//                fontSize = 40.sp, fontWeight = FontWeight.Bold)
+//        }
     }
 }
 
@@ -531,6 +532,9 @@ fun AddYourTasksScreen(
     backButton: () -> Unit,
     onNext: () -> Unit
 ) {
+    var tasks = listOf<Tasks>(
+        Tasks("hello", true)
+    )
     Column {
         AddYourTasksAppBar(
             backButton = backButton
@@ -538,7 +542,7 @@ fun AddYourTasksScreen(
         AddYourTasksTextFieldWithButton(
             onNext = onNext
         )
-        TasksAddedList(tasksAdded = Datasource().loadTasks())
+        TasksAddedList(tasksAdded = tasks)
 //    AddTaskScreenNextButton()
     }
 }
@@ -593,7 +597,7 @@ fun AddYourTasksTextFieldWithButton(
     }
     Row(horizontalArrangement = Arrangement.Center) {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { Log.i("tasks", text.toString()) },
             modifier = Modifier
                 .padding(start = 80.dp, top = 30.dp, end = 0.dp, bottom = 0.dp)
                 .width(120.dp)
@@ -637,7 +641,7 @@ fun AddYourTasksTextFieldWithButton(
 }
 
 @Composable
-fun TasksAddedCard(tasks: TasksAdded,
+fun TasksAddedCard(task: Tasks,
                     modifier: Modifier = Modifier) {
     Card(modifier = Modifier
         .padding(start = 25.dp, top = 0.dp, end = 10.dp, bottom = 20.dp)
@@ -651,7 +655,7 @@ fun TasksAddedCard(tasks: TasksAdded,
 
                 Row (modifier = Modifier
                     .padding(start = 60.dp, top = 15.dp, bottom = 0.dp, end = 0.dp)) {
-                    Text(text = stringResource(id = tasks.taskResourceId),color = White,
+                    Text(text = task.description,color = White,
                     textAlign = TextAlign.Center)
                 }
 
@@ -662,10 +666,10 @@ fun TasksAddedCard(tasks: TasksAdded,
 }
 
 @Composable
-fun TasksAddedList(tasksAdded: List<TasksAdded>, modifier: Modifier = Modifier) {
+fun TasksAddedList(tasksAdded: List<Tasks>, modifier: Modifier = Modifier) {
     LazyColumn (modifier = Modifier.padding(top = 100.dp, start = 20.dp, bottom = 0.dp, end = 0.dp)){
         items(tasksAdded) {
-                tasks ->  TasksAddedCard(tasks = tasks)
+                task ->  TasksAddedCard(task = task)
         }
     }
 }
