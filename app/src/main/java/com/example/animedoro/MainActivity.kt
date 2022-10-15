@@ -5,24 +5,23 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHost
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
+import com.example.animedoro.model.Tasks
 import com.example.animedoro.ui.theme.AnimedoroTheme
 import com.example.animedoro.ui.theme.primary
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        var music = playMusic(R.raw.song, this)
         super.onCreate(savedInstanceState)
         setContent {
             AnimedoroTheme {
@@ -31,7 +30,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = primary
                 ) {
-                    AnimeradoMainScreen()
+                    AnimeradoMainScreen(
+                        music = music
+                    )
                 }
             }
         }
@@ -47,8 +48,14 @@ enum class AnimedoroScreen() {
 }
 
 @Composable
-fun AnimeradoMainScreen(modifier: Modifier = Modifier) {
+fun AnimeradoMainScreen(
+    modifier: Modifier = Modifier,
+    music: playMusic
+) {
     val navController = rememberNavController()
+    val tasks = remember {
+        mutableStateListOf<Tasks>()
+    }
 
     Scaffold() { innerPadding ->
         NavHost(
@@ -90,7 +97,8 @@ fun AnimeradoMainScreen(modifier: Modifier = Modifier) {
                     },
                     onNext = {
                         navController.navigate(AnimedoroScreen.StartScreen.name)
-                    }
+                    },
+                    tasks = tasks
                 )
             }
             composable(route = AnimedoroScreen.StartScreen.name) {
@@ -107,10 +115,10 @@ fun AnimeradoMainScreen(modifier: Modifier = Modifier) {
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun AnimeradoPreview() {
-    AnimedoroTheme {
-        AnimeradoMainScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun AnimeradoPreview() {
+//    AnimedoroTheme {
+//        AnimeradoMainScreen()
+//    }
+//}

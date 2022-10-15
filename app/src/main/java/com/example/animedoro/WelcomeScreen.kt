@@ -28,6 +28,7 @@ import androidx.compose.material.icons.rounded.AddTask
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -482,7 +483,7 @@ fun AllSessionList(sessionList: List<Session>, modifier: Modifier = Modifier) {
 
 @Composable
 fun StartYourSessionScreen(
-    backButton: () -> Unit
+    backButton: () -> Unit,
 ) {
     StartYourSessionsAppBar(
         backButton = backButton
@@ -515,7 +516,8 @@ fun StartYourSessionsAppBar(
 }
 
 @Composable
-fun StartYourSessionButton() {
+fun StartYourSessionButton(
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center) {
         Button(onClick = {},
@@ -543,11 +545,12 @@ fun StartYourSessionButton() {
 @Composable
 fun AddYourTasksScreen(
     backButton: () -> Unit,
-    onNext: () -> Unit
+    onNext: () -> Unit,
+    tasks: SnapshotStateList<Tasks>
 ) {
-    val tasks = remember {
-        mutableStateListOf<Tasks>()
-    }
+//    val tasks = remember {
+//        mutableStateListOf<Tasks>()
+//    }
     Column {
         AddYourTasksAppBar(
             backButton = backButton
