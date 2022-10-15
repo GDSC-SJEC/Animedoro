@@ -44,7 +44,8 @@ enum class AnimedoroScreen() {
     SessionType,
     AllPreviousSessions,
     AddYourTasks,
-    StartScreen
+    StartScreen,
+    BreakScreen
 }
 
 @Composable
@@ -108,6 +109,13 @@ fun AnimeradoMainScreen(
                     }
                 )
             }
+            composable(route = AnimedoroScreen.BreakScreen.name) {
+                BreakScreen(
+                    backButton = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
 
     }
@@ -119,6 +127,6 @@ fun AnimeradoMainScreen(
 //@Composable
 //fun AnimeradoPreview() {
 //    AnimedoroTheme {
-//        AnimeradoMainScreen()
+//        AnimeradoMainScreen(music = music)
 //    }
 //}
