@@ -58,7 +58,8 @@ import java.util.*
 @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun SessionTimer(
-        tasks: SnapshotStateList<Tasks>
+        tasks: SnapshotStateList<Tasks>,
+
     )
     {
                 var sheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
@@ -112,8 +113,8 @@ fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>) {
         Column {
             Row {
                 //do the nav here bro when tasks are over 🥲
-                if(tasks.filter{it.isCompleted.value}.size.toString()==tasks.count().toString())
-                    NavtoBreak()
+                //if(tasks.filter{it.isCompleted.value}.size.toString()==tasks.count().toString())
+
                 Text(
                     text = tasks.filter{it.isCompleted.value}.size.toString()+"/"+tasks.count().toString(), color = White,
                     fontSize = 50.sp,
@@ -138,9 +139,7 @@ fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>) {
     }
 }
 
-fun NavtoBreak() {
-    TODO("Not yet implemented")
-}
+
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -221,8 +220,8 @@ fun Timer(
             color=White,
         )
         //do the nav here bro when time over 🥲
-        if(currentTime <= 0 && !isTimerRunning)
-            NavtoBreak()
+        //if(currentTime <= 0 && !isTimerRunning)
+
         OutlinedButton(onClick=
         {
             if(currentTime<=0)

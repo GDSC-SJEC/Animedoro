@@ -18,6 +18,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.rounded.AddTask
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -43,6 +45,8 @@ import com.example.animedoro.model.AnimeSuggestions
 import com.example.animedoro.model.TasksAdded
 import com.example.animedoro.ui.theme.White
 import com.example.animedoro.ui.theme.cardTrans
+import com.example.animedoro.ui.theme.primary
+import com.example.animedoro.ui.theme.secondary
 import kotlinx.coroutines.delay
 
 
@@ -55,11 +59,15 @@ fun BreakScreen(
     backButton: () -> Unit,
     homeButton: () -> Unit,
 
+
     ) {
-    ChibiAnimation()
+
 //    Confetti()
-    BreakText()
-    BreakButtons(homeButton = homeButton)
+    Box(modifier=Modifier.background(color = primary)) {
+        ChibiAnimation()
+        BreakText()
+        BreakButtons(homeButton = homeButton)
+    }
 }
 
 @Composable
@@ -150,9 +158,10 @@ fun BreakText() {
                 ) {
                     Text(
                         text = "Here's some anime suggestions as a reward. Enjoy!",
-                        fontSize = 21.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Medium,
                         color = androidx.compose.ui.graphics.Color.Black,
+
                     )
                 }
                 AnimeSuggestionsList(animeSuggestions = Datasource().loadAnimeSuggestions())
@@ -179,41 +188,63 @@ fun AnimeSuggestionsCard(suggestions: AnimeSuggestions,
     Card(modifier = Modifier
         .padding(start = 20.dp, top = 0.dp, end = 20.dp, bottom = 20.dp)
         .height(80.dp)
-        .width(450.dp),
+        .width(650.dp),
         elevation = 10.dp,
-        backgroundColor = cardTrans,
+        backgroundColor = secondary,
         shape = RoundedCornerShape(20.dp),
         onClick = {
             context.startActivity(intent)
         }
     ) {
-        Box {
-            Column(
+        Row {
+            Image(
+                painter =
+                painterResource(id = suggestions.animeImage),
+                contentDescription = suggestions.animeName,
                 modifier = Modifier
-                    .padding(top = 0.dp, start = 0.dp, end = 125.dp, bottom = 0.dp)
-                    .fillMaxSize()
-            ) {
-                Image(
-                    painter =
-                    painterResource(id = suggestions.animeImage),
-                    contentDescription = suggestions.animeName,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth(),
+                    .width(97.dp)
+                    .height(97.dp)
+                    .clip(RoundedCornerShape(20.dp)),
 
-                    contentScale = ContentScale.Crop
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .padding(start = 116.dp, top = 25.dp, bottom = 25.dp, end = 20.dp)
-            ) {
-                Text(
-                    text = suggestions.animeName, color = White,
-                    textAlign = TextAlign.Center
-                )
+                contentScale = ContentScale.Crop
+            )
+            Column() {
+                Row (modifier = Modifier
+                    .padding(start = 10.dp, top = 10.dp, bottom = 0.dp, end = 0.dp)) {
+
+
+                    Text(text = suggestions.animeName,color = White)
+                }
+
             }
         }
+//        Box {
+//            Column(
+//                modifier = Modifier
+//                    .padding(top = 0.dp, start = 0.dp, end = 125.dp, bottom = 0.dp)
+//                    .fillMaxSize()
+//            ) {
+//                Image(
+//                    painter =
+//                    painterResource(id = suggestions.animeImage),
+//                    contentDescription = suggestions.animeName,
+//                    modifier = Modifier
+//                        .fillMaxHeight()
+//                        .fillMaxWidth(),
+//
+//                    contentScale = ContentScale.Crop
+//                )
+//            }
+//            Column(
+//                modifier = Modifier
+//                    .padding(start = 116.dp, top = 25.dp, bottom = 25.dp, end = 20.dp)
+//            ) {
+//                Text(
+//                    text = suggestions.animeName, color = White,
+//                    textAlign = TextAlign.Center
+//                )
+//            }
+//        }
     }
 }
 
