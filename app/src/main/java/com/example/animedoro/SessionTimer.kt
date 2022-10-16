@@ -2,15 +2,21 @@ package com.example.animedoro
 
 
 import android.util.Log
+import android.widget.CheckBox
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.ArrowRight
 
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -33,6 +39,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -45,17 +52,18 @@ import com.example.animedoro.ui.theme.secondary
 import com.example.animedoro.ui.theme.taskbottom
 import kotlinx.coroutines.delay
 import java.lang.Math.*
+import java.util.*
 
 
-    @OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun SessionTimer(
         tasks: SnapshotStateList<Tasks>
     )
     {
-                val sheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
+                var sheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
                 // A surface container using the 'background' color from the theme
-                val scaffoldState= rememberBottomSheetScaffoldState(
+                var scaffoldState= rememberBottomSheetScaffoldState(
                     bottomSheetState = sheetState
                 )
                 BottomSheetScaffold(
@@ -73,7 +81,7 @@ import java.lang.Math.*
                             color=White
                         )
 
-
+                        TasksList(tasksAdded = tasks)
                     }
                     },
                     modifier = Modifier.fillMaxSize(),
@@ -81,7 +89,7 @@ import java.lang.Math.*
 
                     sheetShape = RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp)
                 ) {
-                    Session()
+                    Session(sheetState=sheetState,tasks=tasks)
                 }
 
 }
@@ -89,19 +97,25 @@ import java.lang.Math.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Session() {
+fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>) {
+
     Box(modifier= Modifier
         .background(color = primary)
         .fillMaxSize()){
         Image(modifier= Modifier
-            .fillMaxSize().alpha(0.8F).blur(radius =5.dp)
+            .fillMaxSize()
+            .alpha(0.8F)
+            .blur(radius = 5.dp)
             ,contentScale = ContentScale.FillBounds,
             alignment = Alignment.CenterEnd,painter = painterResource(id = R.drawable.sessionbg), contentDescription = null)
 
         Column {
             Row {
+                //do the nav here bro when tasks are over 🥲
+                if(tasks.filter{it.isCompleted.value}.size.toString()==tasks.count().toString())
+                    NavtoBreak()
                 Text(
-                    text = "3/5", color = White,
+                    text = tasks.filter{it.isCompleted.value}.size.toString()+"/"+tasks.count().toString(), color = White,
                     fontSize = 50.sp,
                     modifier = Modifier.padding(start = 10.dp)
                 )
@@ -115,7 +129,8 @@ fun Session() {
                     handleColor=Black,
                     inactiveBarColor=White,
                     activeBarColor = secondary,
-                    modifier=Modifier.size(300.dp)
+                    modifier=Modifier.size(300.dp),
+                    sheetState=sheetState
                 )
             }
 
@@ -123,6 +138,11 @@ fun Session() {
     }
 }
 
+fun NavtoBreak() {
+    TODO("Not yet implemented")
+}
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Timer(
     totalTime:Long,
@@ -131,7 +151,8 @@ fun Timer(
     activeBarColor: Color,
     modifier:Modifier=Modifier,
     initialValue:Float=1f,
-    strokeWidth: Dp =10.dp
+    strokeWidth: Dp =10.dp,
+    sheetState:BottomSheetState
 ){
     var size by remember {
         mutableStateOf(IntSize.Zero)
@@ -199,6 +220,9 @@ fun Timer(
             fontWeight= FontWeight.Bold,
             color=White,
         )
+        //do the nav here bro when time over 🥲
+        if(currentTime <= 0 && !isTimerRunning)
+            NavtoBreak()
         OutlinedButton(onClick=
         {
             if(currentTime<=0)
@@ -210,7 +234,9 @@ fun Timer(
                 isTimerRunning=!isTimerRunning
             }
         },
-            modifier=Modifier.align(Alignment.BottomCenter).height(60.dp),
+            modifier= Modifier
+                .align(Alignment.BottomCenter)
+                .height(60.dp),
             shape=CircleShape,
             colors = ButtonDefaults.outlinedButtonColors(backgroundColor = White),
 
@@ -218,13 +244,57 @@ fun Timer(
             ){
             if(currentTime==0L) {
                 Log.i("timer", "timer done")
+                Text(text="go to get chai")
+                Icon(Icons.Default.ArrowForward, contentDescription = "play button",tint=Black)
             }
-            if(!isTimerRunning||currentTime==0L){
+            if(!isTimerRunning&&currentTime>0){
                 Icon(Icons.Default.PlayArrow, contentDescription = "play button",tint=Black)
             }
-            else{
+            else if(isTimerRunning&&currentTime>0){
                 Icon(Icons.Default.Pause, contentDescription = "pause button",tint=Black)
             }
+        }
+    }
+}
+@Composable
+fun TasksCard(task: Tasks,
+                   modifier: Modifier = Modifier) {
+    Card(modifier = Modifier
+        .padding(start = 25.dp, top = 0.dp, end = 10.dp, bottom = 20.dp)
+        .height(60.dp)
+        .width(322.dp),
+        elevation = 10.dp,
+        backgroundColor = secondary,
+        shape = RoundedCornerShape(20.dp)
+    ) {
+
+        val checkedState = remember { mutableStateOf(false) }
+        Row (modifier = Modifier
+            .padding(start = 60.dp, top = 15.dp, bottom = 0.dp, end = 0.dp),
+
+        )
+        {
+            Checkbox(
+                checked = task.completed.value,
+                onCheckedChange = {
+                    task.completed.value =it
+                    Log.i("task", task.completed.value.toString())},
+                modifier = Modifier.padding(bottom=18.dp))
+            Text(text = task.description,color = com.example.animedoro.ui.theme.White,
+                textAlign = TextAlign.Center)
+        }
+
+
+
+    }
+
+}
+
+@Composable
+fun TasksList(tasksAdded: List<Tasks>, modifier: Modifier = Modifier) {
+    LazyColumn (modifier = Modifier.padding(top = 100.dp, start = 20.dp, bottom = 0.dp, end = 0.dp)){
+        items(tasksAdded) {
+                task ->  TasksCard(task = task)
         }
     }
 }

@@ -1,22 +1,15 @@
 package com.example.animedoro
 
-import android.graphics.drawable.Icon
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 //import androidx.compose.material.icons.Icons
@@ -26,7 +19,6 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.rounded.AddTask
 import androidx.compose.material.icons.rounded.ArrowForward
-import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
@@ -34,22 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.fontResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.animedoro.data.Datasource
@@ -60,6 +41,7 @@ import com.example.animedoro.ui.theme.White
 import com.example.animedoro.ui.theme.cardTrans
 import com.example.animedoro.ui.theme.primary
 import com.example.animedoro.ui.theme.secondary
+import java.lang.Boolean.valueOf
 
 @Composable
 fun WelcomeScreen(
@@ -575,10 +557,12 @@ fun AddYourTasksScreen(
         AddYourTasksAppBar(
             backButton = backButton
         )
+
         AddYourTasksTextFieldWithButton(
             onNext = onNext,
             addToList = {
-                tasks.add(Tasks(it, true))
+
+                tasks.add(Tasks(it,mutableStateOf(false)))
             }
         )
         TasksAddedList(tasksAdded = tasks)
