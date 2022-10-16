@@ -16,6 +16,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -34,8 +36,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
-import coil.ImageLoader
-import coil.compose.AsyncImagePainter.State.Empty.painter
+//import coil.ImageLoader
+//import coil.compose.AsyncImagePainter.State.Empty.painter
 import com.example.animedoro.data.Datasource
 import com.example.animedoro.model.AnimeSuggestions
 import com.example.animedoro.model.TasksAdded
@@ -51,10 +53,51 @@ enum class ChibiPosition {
 @Composable
 fun BreakScreen(
     backButton: () -> Unit,
-) {
+    homeButton: () -> Unit,
+
+    ) {
     ChibiAnimation()
 //    Confetti()
     BreakText()
+    BreakButtons(homeButton = homeButton)
+}
+
+@Composable
+fun BreakButtons(homeButton: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 50.dp, end = 10.dp),
+        Alignment.BottomEnd,
+
+    ) {
+        Button(
+            onClick = { homeButton() },
+            modifier = Modifier
+//                .fillMaxWidth(0.5f)
+                .padding(bottom = 20.dp, end = 20.dp)
+                .height(50.dp)
+                .width(120.dp),
+            contentPadding = PaddingValues(0.dp),
+            shape = RoundedCornerShape(10.dp),
+
+        ) {
+            Text(
+                modifier = Modifier.padding(8.dp),
+                text = "Home",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = White,
+            )
+            Icon(
+                modifier = Modifier.padding(start = 2.dp, end = 2.dp),
+                tint = White,
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = "home button"
+            )
+        }
+    }
+
 }
 
 @Composable
@@ -178,16 +221,30 @@ fun AnimeSuggestionsCard(suggestions: AnimeSuggestions,
 fun ChibiAnimation() {
     var chibiState by remember { mutableStateOf(ChibiPosition.One) }
 
-    val offsetAnimation: Dp by animateDpAsState(
-        when (chibiState) {
-            ChibiPosition.One -> (-130).dp
-            ChibiPosition.Two -> 0.dp
-            ChibiPosition.Three -> 10.dp
-            else -> 25.dp
-        },
-        animationSpec = tween(1000)
+    val infiniteTransition = rememberInfiniteTransition()
+    val offsetAnimation by infiniteTransition.animateValue(
+        initialValue = (-130).dp,
+        targetValue = (-130).dp,
+        typeConverter = Dp.VectorConverter,
+        animationSpec = infiniteRepeatable(
+            animation = keyframes {
+                durationMillis = 10000
+                (-240).dp at 1000
+                20.dp at 4000
+                20.dp at 8000
+            },
+            repeatMode = RepeatMode.Restart
+        )
     )
-
+//    val offsetAnimation: Dp by animateDpAsState(
+//        when (chibiState) {
+//            ChibiPosition.One -> (-130).dp
+//            ChibiPosition.Two -> 0.dp
+//            ChibiPosition.Three -> 10.dp
+//            else -> 25.dp
+//        },
+//        animationSpec = tween(1000)
+//    )
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -204,21 +261,6 @@ fun ChibiAnimation() {
 //            contentScale = ContentScale.Fit
 
         )
-        Button(
-            onClick = {
-                chibiState = when (chibiState) {
-                    ChibiPosition.One -> ChibiPosition.Four
-                    ChibiPosition.Four -> ChibiPosition.One
-                    else -> {
-                        ChibiPosition.One
-                    }
-                }
-            }, modifier = Modifier
-                .fillMaxSize()
-                .wrapContentSize(align = Alignment.BottomEnd)
-        ) {
-            Text(text = "Ride")
-        }
     }
 }
 

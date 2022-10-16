@@ -113,6 +113,9 @@ fun AnimeradoMainScreen(
                 BreakScreen(
                     backButton = {
                         navController.popBackStack()
+                    },
+                    homeButton = {
+                        navController.navigate(AnimedoroScreen.Welcome.name)
                     }
                 )
             }
