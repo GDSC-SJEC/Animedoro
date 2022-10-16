@@ -494,6 +494,7 @@ fun AllSessionList(sessionList: List<Session>, modifier: Modifier = Modifier) {
 @Composable
 fun StartYourSessionScreen(
     backButton: () -> Unit,
+    onStart: () -> Unit
 ) {
     Column(modifier= Modifier
         .background(color = primary)
@@ -501,7 +502,9 @@ fun StartYourSessionScreen(
         StartYourSessionsAppBar(
             backButton = backButton
         )
-        StartYourSessionButton()
+        StartYourSessionButton(
+            onStart = onStart
+        )
     }
 }
 
@@ -531,10 +534,11 @@ fun StartYourSessionsAppBar(
 
 @Composable
 fun StartYourSessionButton(
+    onStart: () -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center) {
-        Button(onClick = {},
+        Button(onClick = onStart,
             modifier = Modifier
                 .padding(start = 93.dp, top = 140.dp, end = 0.dp, bottom = 60.dp)
                 .width(234.dp)

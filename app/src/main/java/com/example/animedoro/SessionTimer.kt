@@ -1,6 +1,7 @@
 package com.example.animedoro
 
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -106,7 +107,7 @@ fun Session() {
                 .padding(top = 250.dp),horizontalArrangement = Arrangement.Center){
                 Timer(
                     //Add your time in seconds here
-                    totalTime=100,
+                    totalTime=10,
                     handleColor=Black,
                     inactiveBarColor=White,
                     activeBarColor = secondary,
@@ -211,6 +212,9 @@ fun Timer(
 
 
             ){
+            if(currentTime==0L) {
+                Log.i("timer", "timer done")
+            }
             if(!isTimerRunning||currentTime==0L){
                 Icon(Icons.Default.PlayArrow, contentDescription = "play button",tint=Black)
             }

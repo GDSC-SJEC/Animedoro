@@ -45,6 +45,7 @@ enum class AnimedoroScreen() {
     AllPreviousSessions,
     AddYourTasks,
     StartScreen,
+    Session,
     BreakScreen
 }
 
@@ -106,8 +107,14 @@ fun AnimeradoMainScreen(
                 StartYourSessionScreen(
                     backButton = {
                         navController.popBackStack()
+                    },
+                    onStart = {
+                        navController.navigate(AnimedoroScreen.Session.name)
                     }
                 )
+            }
+            composable(route = AnimedoroScreen.Session.name) {
+                Session()
             }
             composable(route = AnimedoroScreen.BreakScreen.name) {
                 BreakScreen(
