@@ -58,13 +58,17 @@ import com.example.animedoro.model.Tasks
 import com.example.animedoro.model.TasksAdded
 import com.example.animedoro.ui.theme.White
 import com.example.animedoro.ui.theme.cardTrans
+import com.example.animedoro.ui.theme.primary
+import com.example.animedoro.ui.theme.secondary
 
 @Composable
 fun WelcomeScreen(
     onAddNewSession: () -> Unit,
     allPreviousSessions: () -> Unit
 ){
-    Column {
+    Column (modifier= Modifier
+        .background(color = primary)
+        .fillMaxSize()) {
         WelcomeTextWithImage()
         AddNewSessionButton(
             onAddNewSession = onAddNewSession
@@ -316,12 +320,14 @@ fun SessionType(
     backButton: () -> Unit,
     onDefault: () -> Unit
 ) {
-    SessionTypeAppBar(
-        backButton = backButton
-    )
-    Buttons(
-        onDefault = onDefault
-    )
+    Column(modifier=Modifier.background(color=primary).fillMaxSize()) {
+        SessionTypeAppBar(
+            backButton = backButton
+        )
+        Buttons(
+            onDefault = onDefault
+        )
+    }
 }
 
 @Composable
@@ -332,9 +338,9 @@ fun SessionTypeAppBar(
         OutlinedButton(onClick = backButton,
         modifier = Modifier.size(50.dp),
         shape = CircleShape,
-        border = BorderStroke(1.dp, Color.Black),
+
             contentPadding = PaddingValues(0.dp),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
+            colors = ButtonDefaults.outlinedButtonColors(backgroundColor =White)
 
         ) {
             Icon(Icons.Default.ArrowBack, contentDescription = "back button")
@@ -391,10 +397,14 @@ fun Buttons(
 fun AllSessions(
     backButton: () -> Unit
 ) {
-    AllSessionsAppBar(
-        backButton = backButton
-    )
-    AllSessionList(sessionList = Datasource().loadSessions())
+    Column(modifier= Modifier
+        .background(color = primary)
+        .fillMaxSize()) {
+        AllSessionsAppBar(
+            backButton = backButton
+        )
+        AllSessionList(sessionList = Datasource().loadSessions())
+    }
 }
 
 @Composable
@@ -485,10 +495,14 @@ fun AllSessionList(sessionList: List<Session>, modifier: Modifier = Modifier) {
 fun StartYourSessionScreen(
     backButton: () -> Unit,
 ) {
-    StartYourSessionsAppBar(
-        backButton = backButton
-    )
-    StartYourSessionButton()
+    Column(modifier= Modifier
+        .background(color = primary)
+        .fillMaxSize()) {
+        StartYourSessionsAppBar(
+            backButton = backButton
+        )
+        StartYourSessionButton()
+    }
 }
 
 @Composable
@@ -499,9 +513,9 @@ fun StartYourSessionsAppBar(
         OutlinedButton(onClick = backButton,
             modifier = Modifier.size(50.dp),
             shape = CircleShape,
-            border = BorderStroke(1.dp, Color.Black),
+
             contentPadding = PaddingValues(0.dp),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
+            colors = ButtonDefaults.outlinedButtonColors(backgroundColor =White)
 
         ) {
             Icon(Icons.Default.ArrowBack, contentDescription = "back button")
@@ -551,7 +565,9 @@ fun AddYourTasksScreen(
 //    val tasks = remember {
 //        mutableStateListOf<Tasks>()
 //    }
-    Column {
+    Column(modifier= Modifier
+        .background(color = primary)
+        .fillMaxSize()){
         AddYourTasksAppBar(
             backButton = backButton
         )
@@ -668,9 +684,9 @@ fun AddYourTasksAppBar(
         OutlinedButton(onClick = backButton,
             modifier = Modifier.size(50.dp),
             shape = CircleShape,
-            border = BorderStroke(1.dp, Color.Black),
+
             contentPadding = PaddingValues(0.dp),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black)
+            colors = ButtonDefaults.outlinedButtonColors(backgroundColor =White)
 
         ) {
             Icon(Icons.Default.ArrowBack, contentDescription = "back button")
@@ -700,10 +716,11 @@ fun AddYourTasksTextFieldWithButton(
                 .width(350.dp)
                 .padding(start = 60.dp, top = 50.dp, end = 0.dp, bottom = 0.dp),
             shape = RoundedCornerShape(20.dp),
+
             colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.Gray,
+                textColor = White,
                 disabledTextColor = Color.Transparent,
-//                backgroundColor = Color.White,
+              backgroundColor = secondary,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent
@@ -763,7 +780,7 @@ fun TasksAddedCard(task: Tasks,
         .height(60.dp)
         .width(322.dp),
         elevation = 10.dp,
-        backgroundColor = cardTrans,
+        backgroundColor = secondary,
         shape = RoundedCornerShape(20.dp)
     ) {
 
