@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.animedoro.model.Tasks
 import com.example.animedoro.ui.theme.primary
 import com.example.animedoro.ui.theme.secondary
 import com.example.animedoro.ui.theme.taskbottom
@@ -47,7 +49,9 @@ import java.lang.Math.*
 
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
-    fun SessionTimer()
+    fun SessionTimer(
+        tasks: SnapshotStateList<Tasks>
+    )
     {
                 val sheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
                 // A surface container using the 'background' color from the theme
