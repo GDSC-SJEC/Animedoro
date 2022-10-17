@@ -135,7 +135,8 @@ fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>, toBrea
                     modifier=Modifier.size(300.dp),
                     sheetState=sheetState,
                     toBreak = toBreak,
-                    music = music
+                    music = music,
+                    tasks = tasks
                 )
             }
 
@@ -157,7 +158,8 @@ fun Timer(
     strokeWidth: Dp =10.dp,
     sheetState:BottomSheetState,
     toBreak: () -> Unit,
-    music: playMusic
+    music: playMusic,
+    tasks: SnapshotStateList<Tasks>
 ){
     var size by remember {
         mutableStateOf(IntSize.Zero)
@@ -252,7 +254,7 @@ fun Timer(
 //                Text(text="go to get chai")
 //                Icon(Icons.Default.ArrowForward, contentDescription = "play button",tint=Black)
                 music.pauseMusic()
-
+                tasks.clear()
                 Button(
                     onClick = toBreak,
                     modifier = Modifier

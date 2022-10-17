@@ -56,10 +56,10 @@ fun WelcomeScreen(
             onAddNewSession = onAddNewSession
 
         )
-//        RecentSessions()
-//        AllPreviousSessionsButton(
-//            allPreviousSessions = allPreviousSessions
-//        )
+        RecentSessions()
+        AllPreviousSessionsButton(
+            allPreviousSessions = allPreviousSessions
+        )
     }
 }
 
@@ -551,7 +551,6 @@ fun AddYourTasksScreen(
 //    val tasks = remember {
 //        mutableStateListOf<Tasks>()
 //    }
-    tasks.clear()
 
     Column(modifier= Modifier
         .background(color = primary)
