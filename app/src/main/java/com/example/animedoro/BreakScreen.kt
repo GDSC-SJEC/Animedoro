@@ -38,8 +38,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
-//import coil.ImageLoader
-//import coil.compose.AsyncImagePainter.State.Empty.painter
+import coil.ImageLoader
+import coil.compose.AsyncImagePainter.State.Empty.painter
+import coil.compose.rememberAsyncImagePainter
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.request.ImageRequest
+import coil.size.Size
 import com.example.animedoro.data.Datasource
 import com.example.animedoro.model.AnimeSuggestions
 import com.example.animedoro.model.TasksAdded
@@ -59,12 +64,11 @@ fun BreakScreen(
     backButton: () -> Unit,
     homeButton: () -> Unit,
 
-
     ) {
 
-//    Confetti()
     Box(modifier=Modifier.background(color = primary)) {
         ChibiAnimation()
+        Confetti()
         BreakText()
         BreakButtons(homeButton = homeButton)
     }
@@ -105,7 +109,6 @@ fun BreakButtons(homeButton: () -> Unit) {
             )
         }
     }
-
 }
 
 @Composable
@@ -119,9 +122,9 @@ fun BreakText() {
                 onClick = { breakState = 2 },
                 modifier = Modifier
 //                .align(CenterHorizontally)
-                    .padding(top = 300.dp, start = 60.dp, end = 60.dp)
-                    .height(150.dp)
-                    .width(260.dp)
+                    .padding(top = 325.dp, start = 65.dp, end = 65.dp)
+                    .height(120.dp)
+                    .width(230.dp)
 //                .wrapContentSize(
 //                    Alignment.Center
 //                )
@@ -135,10 +138,8 @@ fun BreakText() {
             {
                 Text(
                     text = "Great u got this far. \nEnjoy your break!",
-//                style = MaterialTheme.typography.h4,
-//                color = androidx.compose.ui.graphics.Color.Black,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(10.dp)
                 )
             }
@@ -267,15 +268,6 @@ fun ChibiAnimation() {
             repeatMode = RepeatMode.Restart
         )
     )
-//    val offsetAnimation: Dp by animateDpAsState(
-//        when (chibiState) {
-//            ChibiPosition.One -> (-130).dp
-//            ChibiPosition.Two -> 0.dp
-//            ChibiPosition.Three -> 10.dp
-//            else -> 25.dp
-//        },
-//        animationSpec = tween(1000)
-//    )
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -295,48 +287,30 @@ fun ChibiAnimation() {
     }
 }
 
-//@Composable
-//fun Confetti() {
-//    // Creates the infinite transition
-//    val infiniteTransition = rememberInfiniteTransition()
-//
-//    // Animate from 0f to 1f
-//    val animationProgress by infiniteTransition.animateFloat(
-//        initialValue = 0f,
-//        targetValue = 1f,
-//        animationSpec = infiniteRepeatable(
-//            animation = tween(durationMillis = 800)
-//        )
-//    )
-//
-//    Box(
-//        modifier = Modifier
-//            .scale(animationProgress)
-//            .alpha(1 - animationProgress),
-//    )
-//}
+@Composable
+fun Confetti(
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    val imageLoader = ImageLoader.Builder(context)
+        .components {
+            if (SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }
+        .build()
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(context).data(data = R.drawable.confetti).apply(block = {
+                size(Size.ORIGINAL)
+            }).build(), imageLoader = imageLoader
+        ),
+        contentDescription = null,
+        modifier = modifier.fillMaxWidth().padding(top = 148.dp, start = 5.dp, end = 0.dp),
+        contentScale = ContentScale.Crop,
+        alignment = Alignment.Center,
+    )
 
-//@Composable
-//fun GifImage(
-//    modifier: Modifier = Modifier,
-//) {
-//    val context = LocalContext.current
-//    val imageLoader = ImageLoader.Builder(context)
-//        .components {
-//            if (SDK_INT >= 28) {
-//                add(ImageDecoderDecoder.Factory())
-//            } else {
-//                add(GifDecoder.Factory())
-//            }
-//        }
-//        .build()
-//    Image(
-//        painter = rememberAsyncImagePainter(
-//            ImageRequest.Builder(context).data(data = R.drawable.YOUR_GIF_HERE).apply(block = {
-//                size(Size.ORIGINAL)
-//            }).build(), imageLoader = imageLoader
-//        ),
-//        contentDescription = null,
-//        modifier = modifier.fillMaxWidth(),
-//    )
-//}
+}
