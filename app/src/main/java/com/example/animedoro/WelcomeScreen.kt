@@ -732,8 +732,12 @@ fun AddYourTasksTextFieldWithButton(
         val context = LocalContext.current
         Button(
             onClick = {
-                addToList(text.text)
-                Toast.makeText(context, "Task Added!", Toast.LENGTH_SHORT).show()
+                if (text.text.isEmpty()) {
+                    Toast.makeText(context, "Task Empty!", Toast.LENGTH_SHORT).show()
+                } else {
+                    addToList(text.text)
+                    Toast.makeText(context, "Task Added!", Toast.LENGTH_SHORT).show()
+                }
                       },
             modifier = Modifier
                 .padding(start = 80.dp, top = 30.dp, end = 0.dp, bottom = 0.dp)
