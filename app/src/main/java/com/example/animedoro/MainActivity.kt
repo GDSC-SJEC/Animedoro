@@ -1,6 +1,7 @@
 package com.example.animedoro
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -55,6 +57,7 @@ fun AnimeradoMainScreen(
     music: playMusic
 ) {
     val navController = rememberNavController()
+    val context = LocalContext.current
     val tasks = remember {
         mutableStateListOf<Tasks>()
     }
@@ -98,7 +101,11 @@ fun AnimeradoMainScreen(
                         navController.popBackStack()
                     },
                     onNext = {
-                        navController.navigate(AnimedoroScreen.StartScreen.name)
+                        if (tasks.size == 0) {
+                            Toast.makeText(context, "Add tasks!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            navController.navigate(AnimedoroScreen.StartScreen.name)
+                        }
                     },
                     tasks = tasks
                 )
