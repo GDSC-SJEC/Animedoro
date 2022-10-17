@@ -24,4 +24,7 @@ class playMusic(musicName : Int, context: Context) {
     fun stopMusic() {
         mediaPlayer.stop()
     }
+    fun isMusic():Boolean {
+         return mediaPlayer.isPlaying()
+    }
 }

@@ -697,6 +697,7 @@ fun AddYourTasksTextFieldWithButton(
     Row(horizontalArrangement = Arrangement.Center) {
         TextField(
             value = text,
+            placeholder={Text("Add a Task or thy Shall not pass")},
             onValueChange = { newText ->
                 text = newText
             },

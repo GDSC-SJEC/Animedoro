@@ -15,11 +15,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowRight
+import androidx.compose.material.icons.filled.*
 
-import androidx.compose.material.icons.filled.Pause
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
@@ -122,13 +119,44 @@ fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>, toBrea
                     fontSize = 50.sp,
                     modifier = Modifier.padding(start = 10.dp)
                 )
+                Box{
+                    OutlinedButton(
+                        onClick = {
+                            if (music.isMusic()) {
+                                music.pauseMusic()
+                            } else {
+                                music.playMusic()
+                            }
+                        },
+                        modifier = Modifier
+                            .offset(230.dp,20.dp)
+                            .height(60.dp),
+                        shape = CircleShape,
+                        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = White),
+                    )
+                    {
+                        if (music.isMusic()) {
+                            Icon(
+                                Icons.Default.MusicNote,
+                                contentDescription = "play button",
+                                tint = Black
+                            )
+                        } else {
+                            Icon(
+                                Icons.Default.MusicOff,
+                                contentDescription = "play button",
+                                tint = Black
+                            )
+                        }
+                    }
+                }
             }
             Row (modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 250.dp),horizontalArrangement = Arrangement.Center){
                 Timer(
                     //Add your time in seconds here
-                    totalTime=10,
+                    totalTime=2400,
                     handleColor=Black,
                     inactiveBarColor=White,
                     activeBarColor = secondary,
@@ -246,37 +274,37 @@ fun Timer(
                 .height(60.dp),
             shape=CircleShape,
             colors = ButtonDefaults.outlinedButtonColors(backgroundColor = White),
-
-
             ){
-            if(currentTime==0L) {
-//                Log.i("timer", "timer done")
-//                Text(text="go to get chai")
-//                Icon(Icons.Default.ArrowForward, contentDescription = "play button",tint=Black)
-                music.pauseMusic()
-                tasks.clear()
-                Button(
-                    onClick = toBreak,
-                    modifier = Modifier
-                        .padding(start = 20.dp, top = 30.dp, end = 0.dp, bottom = 0.dp)
-                        .width(120.dp)
-                        .height(50.dp),
-                    shape = RoundedCornerShape(20.dp)
-                ) {
-                    Text(
-                        text = "Next",
-                        color = Color.White
-                    )
-                    Icon(Icons.Filled.ArrowForward, contentDescription = "Arrow Forward",
-                        tint= com.example.animedoro.ui.theme.White,
-                        modifier = Modifier.size(29.17.dp))
-                }
-            }
+
             if(!isTimerRunning&&currentTime>0){
                 Icon(Icons.Default.PlayArrow, contentDescription = "play button",tint=Black)
             }
-            else if(isTimerRunning&&currentTime>0){
+            else{
                 Icon(Icons.Default.Pause, contentDescription = "pause button",tint=Black)
+            }
+        }
+
+
+        if(currentTime==0L||(tasks.filter{it.isCompleted.value}.size.toString()==tasks.count().toString())) {
+            isTimerRunning = false
+            music.pauseMusic()
+            //tasks.clear()
+            Button(
+                onClick = toBreak,
+                modifier = Modifier
+                    .padding(start = 20.dp, top = 30.dp, end = 0.dp, bottom = 0.dp)
+                    .width(120.dp)
+                    .height(50.dp)
+                    .offset(0.dp, 200.dp),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Text(
+                    text = "Next",
+                    color = Color.White
+                )
+                Icon(Icons.Filled.ArrowForward, contentDescription = "Arrow Forward",
+                    tint= com.example.animedoro.ui.theme.White,
+                    modifier = Modifier.size(29.17.dp))
             }
         }
     }
