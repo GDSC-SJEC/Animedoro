@@ -551,6 +551,8 @@ fun AddYourTasksScreen(
 //    val tasks = remember {
 //        mutableStateListOf<Tasks>()
 //    }
+    tasks.clear()
+
     Column(modifier= Modifier
         .background(color = primary)
         .fillMaxSize()){

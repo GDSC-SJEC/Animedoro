@@ -251,7 +251,7 @@ fun Timer(
 //                Log.i("timer", "timer done")
 //                Text(text="go to get chai")
 //                Icon(Icons.Default.ArrowForward, contentDescription = "play button",tint=Black)
-                music.stopMusic()
+                music.pauseMusic()
 
                 Button(
                     onClick = toBreak,
