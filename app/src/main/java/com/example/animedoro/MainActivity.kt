@@ -115,7 +115,11 @@ fun AnimeradoMainScreen(
             }
             composable(route = AnimedoroScreen.Session.name) {
                 SessionTimer(
-                    tasks = tasks
+                    tasks = tasks,
+                    toBreak = {
+                        navController.navigate(AnimedoroScreen.BreakScreen.name)
+                    },
+                    music = music
                 )
             }
             composable(route = AnimedoroScreen.BreakScreen.name) {

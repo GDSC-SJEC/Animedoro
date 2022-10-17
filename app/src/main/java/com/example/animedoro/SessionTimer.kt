@@ -59,9 +59,11 @@ import java.util.*
     @Composable
     fun SessionTimer(
         tasks: SnapshotStateList<Tasks>,
-
+        toBreak: () -> Unit,
+        music: playMusic
     )
     {
+                music.startMusic()
                 var sheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
                 // A surface container using the 'background' color from the theme
                 var scaffoldState= rememberBottomSheetScaffoldState(
@@ -90,7 +92,7 @@ import java.util.*
 
                     sheetShape = RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp)
                 ) {
-                    Session(sheetState=sheetState,tasks=tasks)
+                    Session(sheetState=sheetState,tasks=tasks, toBreak = toBreak, music=music)
                 }
 
 }
@@ -98,7 +100,7 @@ import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>) {
+fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>, toBreak: () -> Unit,music: playMusic) {
 
     Box(modifier= Modifier
         .background(color = primary)
@@ -131,7 +133,9 @@ fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>) {
                     inactiveBarColor=White,
                     activeBarColor = secondary,
                     modifier=Modifier.size(300.dp),
-                    sheetState=sheetState
+                    sheetState=sheetState,
+                    toBreak = toBreak,
+                    music = music
                 )
             }
 
@@ -151,7 +155,9 @@ fun Timer(
     modifier:Modifier=Modifier,
     initialValue:Float=1f,
     strokeWidth: Dp =10.dp,
-    sheetState:BottomSheetState
+    sheetState:BottomSheetState,
+    toBreak: () -> Unit,
+    music: playMusic
 ){
     var size by remember {
         mutableStateOf(IntSize.Zero)
@@ -242,9 +248,27 @@ fun Timer(
 
             ){
             if(currentTime==0L) {
-                Log.i("timer", "timer done")
-                Text(text="go to get chai")
-                Icon(Icons.Default.ArrowForward, contentDescription = "play button",tint=Black)
+//                Log.i("timer", "timer done")
+//                Text(text="go to get chai")
+//                Icon(Icons.Default.ArrowForward, contentDescription = "play button",tint=Black)
+                music.stopMusic()
+
+                Button(
+                    onClick = toBreak,
+                    modifier = Modifier
+                        .padding(start = 20.dp, top = 30.dp, end = 0.dp, bottom = 0.dp)
+                        .width(120.dp)
+                        .height(50.dp),
+                    shape = RoundedCornerShape(20.dp)
+                ) {
+                    Text(
+                        text = "Next",
+                        color = Color.White
+                    )
+                    Icon(Icons.Filled.ArrowForward, contentDescription = "Arrow Forward",
+                        tint= com.example.animedoro.ui.theme.White,
+                        modifier = Modifier.size(29.17.dp))
+                }
             }
             if(!isTimerRunning&&currentTime>0){
                 Icon(Icons.Default.PlayArrow, contentDescription = "play button",tint=Black)
