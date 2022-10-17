@@ -1,8 +1,10 @@
 package com.example.animedoro
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,11 +14,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 //import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.rounded.AddTask
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.runtime.*
@@ -26,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -701,6 +701,16 @@ fun AddYourTasksTextFieldWithButton(
             onValueChange = { newText ->
                 text = newText
             },
+            trailingIcon = {
+                Icon(Icons.Default.Clear,
+                    contentDescription = "clear text",
+                    modifier = Modifier
+                        .padding(top = 0.dp)
+                        .clickable {
+                            text = TextFieldValue("")
+                        }
+                )
+            },
             modifier = Modifier
                 .height(236.dp)
                 .width(350.dp)
@@ -718,8 +728,13 @@ fun AddYourTasksTextFieldWithButton(
         )
     }
     Row(horizontalArrangement = Arrangement.Center) {
+
+        val context = LocalContext.current
         Button(
-            onClick = { addToList(text.text) },
+            onClick = {
+                addToList(text.text)
+                Toast.makeText(context, "Task Added!", Toast.LENGTH_SHORT).show()
+                      },
             modifier = Modifier
                 .padding(start = 80.dp, top = 30.dp, end = 0.dp, bottom = 0.dp)
                 .width(120.dp)
@@ -756,7 +771,7 @@ fun AddYourTasksTextFieldWithButton(
                 .height(48.dp)
                 .padding(start = 63.dp, top = 20.dp, end = 0.dp, bottom = 0.dp),
 //            style = MaterialTheme.typography.h4
-        fontSize = 20.sp,
+        fontSize = 25.sp,
 
         )
     }

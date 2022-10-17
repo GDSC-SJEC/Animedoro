@@ -99,6 +99,8 @@ import java.util.*
 @Composable
 fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>, toBreak: () -> Unit,music: playMusic) {
 
+    var musicState by remember { mutableStateOf(true) }
+
     Box(modifier= Modifier
         .background(color = primary)
         .fillMaxSize()){
@@ -124,8 +126,10 @@ fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>, toBrea
                         onClick = {
                             if (music.isMusic()) {
                                 music.pauseMusic()
+                                musicState = false
                             } else {
                                 music.playMusic()
+                                musicState = true
                             }
                         },
                         modifier = Modifier
@@ -135,7 +139,8 @@ fun Session(sheetState:BottomSheetState, tasks: SnapshotStateList<Tasks>, toBrea
                         colors = ButtonDefaults.outlinedButtonColors(backgroundColor = White),
                     )
                     {
-                        if (music.isMusic()) {
+
+                        if (musicState) {
                             Icon(
                                 Icons.Default.MusicNote,
                                 contentDescription = "play button",
